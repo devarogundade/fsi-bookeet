@@ -47,7 +47,13 @@ class USSDController extends Controller
 
             $response = "END Your " . $bankName . " account balance is " . $accountBalance;
         } else if ($text == "3*1") {
-            $response  = "End Dial *384*8334*1*ACCOUNT NUMBER*AMOUNT# to complete your transaction. \n";
+            $response  = "End Dial *384*8334*1*ACCOUNT NUMBER*AMOUNT# to complete your transaction.";
+        } else if ($text == "3*2") {
+            $response  = "End Dial *384*8334*2*ACCOUNT NUMBER*AMOUNT# to complete your transaction.";
+        } else if ($text == "3*3") {
+            $response  = "End Dial *384*8334*3*ACCOUNT NUMBER*AMOUNT# to complete your transaction.";
+        } else {
+            $response  = "End Thank you.";
         }
 
         header('Content-type: text/plain');
