@@ -14,15 +14,21 @@ class USSDController extends Controller
         $text        = $_POST["text"];
 
         if ($text == "") {
-            $response  = "CON What would you want to check \n";
-            $response .= "1. My Account \n";
-            $response .= "2. My phone number";
+            $response  = "CON Welcome back \n";
+            $response .= "1. My Account details \n";
+            $response .= "2. Transactions \n";
+            $response .= "3. Transfer";
         } else if ($text == "1") {
             $response = "CON Choose account information you want to view \n";
             $response .= "1. Account number \n";
-            $response .= "2. Create account \n";
+            $response .= "2. Account balance \n";
         } else if ($text == "2") {
-            $response = "END Your phone number is " . $phoneNumber;
+            $response = "END You don't have any transactions";
+        } else if ($text == "3") {
+            $response  = "CON Choose a bank \n";
+            $response .= "1. Sterling \n";
+            $response .= "2. GTBank \n";
+            $response .= "3. Zenith";
         } else if ($text == "1*1") {
             $account = $this->createVirtualAccount($phoneNumber);
 
@@ -37,9 +43,11 @@ class USSDController extends Controller
             $data = json_decode($account, true);
 
             $bankName = $data['data']['bank_name'];
-            $accountNumber = $data['data']['vnuban'];
+            $accountBalance = "₦ 0.00";
 
-            $response = "END Your account has been created successfully. Your bank name is " . $bankName . " and your account number is " . $accountNumber;
+            $response = "END Your " . $bankName . " account balance is " . $accountBalance;
+        } else if ($text == "3*1") {
+            $response  = "End Dial *384*8334*1*ACCOUNT NUMBER*AMOUNT# to complete your transaction. \n";
         }
 
         header('Content-type: text/plain');
